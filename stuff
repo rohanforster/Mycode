@@ -1,0 +1,26 @@
+#create a function to signal when to buy and sell
+def buy_sell(data):
+  sigPriceBuy = []
+  sigPriceSell = []
+  flag = -1
+  #flag says when moving averages cross
+
+  for i in range(len(data)):
+    if data['SMA30'][i] > data['SMA100'][i]:
+      if flag != 1:
+        sigPriceBuy.append(data['SP500'][i])
+        sigPriceSell.append(np.nan)
+        flag = 1
+      else:
+        sigPriceBuy.append(np.nan)
+        sigPriceSell.append(np.nan)
+    elif data['SMA30'][i] < data['SMA100'][i]:
+        if flag != 0:
+          sigPriceBuy.append(np.nan)
+          sigPriceSell.append(data['SP500'][i])
+          flag = 0
+        else:
+          sigPriceBuy.append(np.nan)
+          sigPriceSell.append(np.nan)
+
+    return(sigPriceBuy,sigPriceSell)
